@@ -1,39 +1,78 @@
+
+from logging import getLogRecordFactory
+from re import I
 import sqlite3
-
-
 sqlite3.connect('login_information.db')
 conn = sqlite3.connect('login_information.db')
 cursor = conn.cursor()
+
 
 print("Connected")
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS userinfo (
+    ID INTEGER PRIMARY KEY,
+    "password" TEXT,
     "first_name" TEXT,
     "last_name" TEXT,
     "phone_number" TEXT,
     "user_name" TEXT
 )""")
 
-print("Table Created")
+# print("Table Created")
+# password = input('Password: \n')
+# firstname = input('First Name: \n')
+# lastname = input('Last Name: \n')
+# phone = input('Phone Number: \n')
+# username = input('Enter a username: \n')
 
-firstname = input('First Name: \n')
-lastname = input('Last Name: \n')
-phone = input('Phone Number: \n')
-username = input('Enter a username:')
+password = 2
+firstname = ('george')
+lastname = ('george')
+phone = ('george')
+username = ('MrBean')
 
-for name in (username):
-    cursor.execute("SELECT FROM user_name WHERE name = ?", (name,))
-    data=cursor.fetchall()
-    if len(data)==0:
-        print('')
-    else: print('Username already taken. Please select a different username')
+cursor.execute("SELECT * FROM userinfo")
+cur_fetchall = cursor.fetchall()
+db_length = len(cur_fetchall)
+i = 0
+r = cursor.fetchone()
+print(r)
+print(db_length)
+while i < db_length:
+        r = cursor.fetchone()
 
+        print(r)
 
-# cursor.execute("""INSERT INTO userinfo(first_name, last_name, phone_number, user_name)
-# VALUES(?,?,?,?)
-# """, (firstname, lastname, phone, username))
+        if r == username:
+                print('Username already exists, please select a different username.')
+                username = input('Please enter a new username: ') 
+                break
+        else:
+            cursor.execute("""INSERT INTO userinfo(password, first_name, last_name, phone_number, user_name)
+            VALUES(?,?,?,?,?) 
+            """, (password, firstname, lastname, phone, username))
+        i+=1
 
+# r = cursor.fetchone()
+# print(r)
+
+# r = cursor.fetchall()
+# db_length = len(r)
+# # print(r[2])
+# # db_length = cursor.rowcount
+# print(db_length)
+# i = 0
+# for item in r:
+#     print(r[i])
+#     i+=1
+
+    
 
 conn.commit()
 conn.close()
+
+
+
+
+
