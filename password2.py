@@ -2,6 +2,8 @@
 from logging import getLogRecordFactory
 from re import I
 import sqlite3
+from unittest import result
+import sys
 sqlite3.connect('login_information.db')
 conn = sqlite3.connect('login_information.db')
 cursor = conn.cursor()
@@ -31,7 +33,13 @@ while True:
         row = cursor.fetchone()
         if row == None:
             break
-        print (row[5])
+        # print (row[5])
+
+        userdata = str(row[5])
+
+        print(userdata[0])
+
+        
 
 # password = 2
 # firstname = ('george')
